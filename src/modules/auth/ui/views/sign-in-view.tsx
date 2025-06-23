@@ -27,10 +27,10 @@ const formSchema = z.object({
   password: z.string().min(1, { message: "Password is required" }),
 });
 
-export const SignInView = () => {
+const SignInView = () => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
-  const [peding, setPending] = useState(false);
+  const [pending, setPending] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -118,10 +118,10 @@ export const SignInView = () => {
                     <AlertTitle>{error}</AlertTitle>
                   </Alert>
                 )}
-                <Button type="submit" className="w-full" disabled={peding}>
+                <Button type="submit" className="w-full" disabled={pending}>
                   Sign in
                 </Button>
-                <div className="after:border-boder relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:boder-t">
+                <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                   <span className="bg-card text-muted-foreground relative z-10 px-2">
                     Or continue with
                   </span>
