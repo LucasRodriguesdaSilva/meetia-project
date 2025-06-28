@@ -15,6 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { OctagonAlertIcon } from "lucide-react";
 import Link from "next/link";
@@ -57,6 +58,7 @@ const SignUpView = () => {
         name: data.name,
         email: data.email,
         password: data.password,
+        callbackURL: "/"
       },
       {
         onSuccess: () => {
@@ -69,6 +71,24 @@ const SignUpView = () => {
         },
       }
     );
+  };
+
+  const onSocial = (provider: 'github' | 'google') => {
+    setError(null);
+    setPending(true);
+
+    authClient.signIn.social({
+      provider: provider,
+      callbackURL: "/"
+    }, {
+      onSuccess: () => {
+        setPending(false);
+      },
+      onError: ({ error }) => {
+        setError(error.message);
+        setPending(false);
+      },
+    });
   };
 
   return (
@@ -175,11 +195,16 @@ const SignUpView = () => {
                   </span>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <Button variant="outline" className="w-full" type="button">
-                    Google
+                  <Button variant="outline" className="w-full" type="button" onClick={() => onSocial("google")}>
+                    <FaGoogle />
                   </Button>
-                  <Button variant="outline" className="w-full" type="button">
-                    Github
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    type="button"
+                    onClick={() => onSocial("github")}
+                  >
+                    <FaGithub />
                   </Button>
                 </div>
                 <div className="text-center text-sm">
